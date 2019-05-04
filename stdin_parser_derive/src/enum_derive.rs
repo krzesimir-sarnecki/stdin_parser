@@ -2,7 +2,7 @@ use crate::common;
 use quote::quote;
 
 fn default_variant_description(variant: &syn::Variant) -> String {
-    format!("{}", variant.ident.to_string())
+    variant.ident.to_string()
 }
 
 fn get_variant_description(variant: &syn::Variant) -> String {
@@ -32,7 +32,7 @@ fn get_variant_constructor(variant: &syn::Variant) -> proc_macro2::TokenStream {
     }
 }
 
-pub(crate) fn derive(ty: &syn::Ident, data: syn::DataEnum) -> proc_macro2::TokenStream {
+pub(crate) fn derive(ty: &syn::Ident, data: &syn::DataEnum) -> proc_macro2::TokenStream {
     let variant_constructors: Vec<_> = data
         .variants
         .iter()

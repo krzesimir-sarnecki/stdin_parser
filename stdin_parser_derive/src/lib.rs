@@ -14,8 +14,8 @@ pub fn derive_stdin_parser(input: TokenStream) -> TokenStream {
     let ty = ast.ident;
 
     let trait_impl = match ast.data {
-        syn::Data::Struct(data) => struct_derive::derive(&ty, data),
-        syn::Data::Enum(data) => enum_derive::derive(&ty, data),
+        syn::Data::Struct(data) => struct_derive::derive(&ty, &data),
+        syn::Data::Enum(data) => enum_derive::derive(&ty, &data),
         _ => panic!("StdinParser only works with structs and enums"),
     };
 

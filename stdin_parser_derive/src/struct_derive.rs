@@ -2,14 +2,14 @@ use crate::common;
 use quote::quote;
 
 fn default_field_description(field: &syn::Field) -> String {
-    format!("{}", field.ident.as_ref().unwrap().to_string())
+    field.ident.as_ref().unwrap().to_string()
 }
 
 fn get_field_description(field: &syn::Field) -> String {
     common::get_description(&field.attrs).unwrap_or_else(|| default_field_description(field))
 }
 
-pub(crate) fn derive(_ty: &syn::Ident, data: syn::DataStruct) -> proc_macro2::TokenStream {
+pub(crate) fn derive(_ty: &syn::Ident, data: &syn::DataStruct) -> proc_macro2::TokenStream {
     let field_names: Vec<_> = data
         .fields
         .iter()

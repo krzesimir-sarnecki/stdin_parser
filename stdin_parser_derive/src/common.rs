@@ -7,7 +7,7 @@ pub(crate) fn get_description(attrs: &[Attribute]) -> Option<String> {
         if let syn::AttrStyle::Outer = attribute.style {
             let meta = attribute.parse_meta().unwrap();
             if let syn::Meta::NameValue(value) = meta {
-                if value.ident.to_string() == "doc" {
+                if value.ident == "doc" {
                     if let syn::Lit::Str(lit) = value.lit {
                         description.push(lit.value().trim().to_string());
                     }

@@ -15,7 +15,7 @@ where
     T::Err: std::fmt::Display,
 {
     fn parse_stdin() -> std::io::Result<Self> {
-        let mut parsed = parse_stdin_line::<T>()?;
+        let mut parsed = parse_stdin_line::<Self>()?;
 
         loop {
             match parsed {
@@ -23,7 +23,7 @@ where
                 Err(err) => println!("{}, try again", err.to_string()),
             }
 
-            parsed = parse_stdin_line::<T>()?;
+            parsed = parse_stdin_line::<Self>()?;
         }
     }
 }
