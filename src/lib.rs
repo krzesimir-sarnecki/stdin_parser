@@ -1,28 +1,29 @@
 // TODO: rename
-pub trait StdinParser {
-    fn parse_stdin() -> Self;
+pub trait StdinParser: Sized {
+    fn parse_stdin() -> std::io::Result<Self>;
 }
 
-fn parse_stdin_line<T: std::str::FromStr>() -> Result<T, T::Err> {
+fn parse_stdin_line<T: std::str::FromStr>() -> std::io::Result<Result<T, T::Err>> {
     let mut buffer = String::new();
-    // TODO: remove this unwrap
-    std::io::stdin().read_line(&mut buffer).unwrap();
+    std::io::stdin().read_line(&mut buffer)?;
     let _ = buffer.pop(); // remove \n
-    buffer.parse()
+    Ok(buffer.parse())
 }
 
 impl<T: std::str::FromStr> StdinParser for T
 where
-    T::Err: std::fmt::Debug,
+    T::Err: std::fmt::Display,
 {
-    fn parse_stdin() -> Self {
-        // TODO: remove this unwrap
-        loop {
-            let parsed = parse_stdin_line();
+    fn parse_stdin() -> std::io::Result<Self> {
+        let mut parsed = parse_stdin_line::<T>()?;
 
-            if let Ok(value) = parsed {
-                return value;
+        loop {
+            match parsed {
+                Ok(value) => return Ok(value),
+                Err(err) => println!("{}, try again", err.to_string()),
             }
+
+            parsed = parse_stdin_line::<T>()?;
         }
     }
 }

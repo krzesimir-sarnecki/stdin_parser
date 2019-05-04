@@ -29,7 +29,7 @@ pub(crate) fn derive(_ty: &syn::Ident, data: syn::DataStruct) -> proc_macro2::To
         .map(|(field_name, field_description)| {
             quote! {
                 println!("{}", #field_description);
-                let #field_name = StdinParser::parse_stdin();
+                let #field_name = StdinParser::parse_stdin()?;
             }
         })
         .collect();
@@ -37,8 +37,8 @@ pub(crate) fn derive(_ty: &syn::Ident, data: syn::DataStruct) -> proc_macro2::To
     quote! {
         #(#fields_parsers)*
 
-        Self{
-            #(#field_names, )*
-        }
+        Ok(Self{
+                #(#field_names, )*
+        })
     }
 }

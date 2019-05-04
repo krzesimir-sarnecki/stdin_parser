@@ -24,7 +24,7 @@ fn get_variant_constructor(variant: &syn::Variant) -> proc_macro2::TokenStream {
             let ty = &fields.unnamed.iter().next().as_ref().unwrap().ty;
 
             quote! {
-                #ident(#ty::parse_stdin())
+                #ident(#ty::parse_stdin()?)
             }
         }
         syn::Fields::Unit => quote! {#ident},
@@ -55,15 +55,25 @@ pub(crate) fn derive(ty: &syn::Ident, data: syn::DataEnum) -> proc_macro2::Token
         })
         .collect();
 
+    let n = variant_constructors.len();
+
     quote! {
         println!("Choose one of the following:");
 
         #(#variant_descriptions)*
 
-        let index: usize = StdinParser::parse_stdin();
-        match index {
-            #(#variant_constructors, )*
-            _ => panic!("index out of range"),
+        loop {
+            let index: usize = StdinParser::parse_stdin()?;
+
+            let value = match index {
+                #(#variant_constructors, )*
+                _ => {
+                    println!("provided integer was not in the range 0..{}", #n);
+                    continue;
+                }
+            };
+
+            return Ok(value)
         }
     }
 }

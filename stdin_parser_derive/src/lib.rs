@@ -21,7 +21,7 @@ pub fn derive_stdin_parser(input: TokenStream) -> TokenStream {
 
     let gen = quote! {
         impl StdinParser for #ty {
-            fn parse_stdin() -> Self{
+            fn parse_stdin() -> std::io::Result<Self>{
                 #trait_impl
             }
         }
