@@ -1,0 +1,5 @@
+[package]
+name = "stdin_parser"
+version = "0.1.0"
+authors = ["Krzesimir Sarnecki <48632920+krzesimir-sarnecki@users.noreply.github.com>"]
+edition = "2018"
