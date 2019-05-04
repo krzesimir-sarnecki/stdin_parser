@@ -17,6 +17,12 @@ where
 {
     fn parse_stdin() -> Self {
         // TODO: remove this unwrap
-        parse_stdin_line().unwrap()
+        loop {
+            let parsed = parse_stdin_line();
+
+            if let Ok(value) = parsed {
+                return value;
+            }
+        }
     }
 }
