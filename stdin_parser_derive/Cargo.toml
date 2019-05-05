@@ -17,4 +17,4 @@ proc-macro = true
 syn = {version = "0.15.33", features = ["extra-traits"]}
 quote = "0.6.12"
 proc-macro2 = "0.4.27"
-stdin_parser = {path = "../", version = "0.1.0"}
+stdin_parser = "0.1.0"
