@@ -3,6 +3,11 @@ name = "stdin_parser_derive"
 version = "0.1.0"
 authors = ["Krzesimir Sarnecki <48632920+krzesimir-sarnecki@users.noreply.github.com>"]
 edition = "2018"
+description = "Parse stdin by defining a struct - trait derive"
+license = "MIT"
+documentation = "https://github.com/krzesimir-sarnecki/stdin_parser"
+homepage = "https://github.com/krzesimir-sarnecki/stdin_parser"
+repository = "https://github.com/krzesimir-sarnecki/stdin_parser"
 
 [lib]
 proc-macro = true
@@ -11,4 +16,4 @@ proc-macro = true
 syn = {version = "0.15.33", features = ["extra-traits"]}
 quote = "0.6.12"
 proc-macro2 = "0.4.27"
-stdin_parser = {path = "../"}
+stdin_parser = {path = "../", version = "0.1.0"}
